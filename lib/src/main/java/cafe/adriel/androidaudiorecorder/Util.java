@@ -7,6 +7,8 @@ import android.os.Handler;
 import cafe.adriel.androidaudiorecorder.model.AudioChannel;
 import cafe.adriel.androidaudiorecorder.model.AudioSampleRate;
 import cafe.adriel.androidaudiorecorder.model.AudioSource;
+import omrecorder.AudioRecordConfig;
+import omrecorder.PullableSource;
 
 
 public class Util {
@@ -18,7 +20,7 @@ public class Util {
     public static void wait(int millis, Runnable callback){
         HANDLER.postDelayed(callback, millis);
     }
-
+	/*
     public static omrecorder.AudioSource getMic(AudioSource source,
                                                 AudioChannel channel,
                                                 AudioSampleRate sampleRate) {
@@ -27,8 +29,13 @@ public class Util {
                 AudioFormat.ENCODING_PCM_16BIT,
                 channel.getChannel(),
                 sampleRate.getSampleRate());
-    }
-
+    }*/
+	public static PullableSource getMic(AudioSource source, AudioChannel channel, AudioSampleRate sampleRate) {
+		return new PullableSource.Default(new AudioRecordConfig.Default(source.getSource(),
+			AudioFormat.ENCODING_PCM_16BIT,
+			channel.getChannel(),
+			sampleRate.getSampleRate()));
+	}
     public static boolean isBrightColor(int color) {
         if(android.R.color.transparent == color) {
             return true;
